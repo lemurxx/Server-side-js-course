@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Simple Clock</title>
+</head>
+
+<body>
+
+    <div style="width:40%; margin: 50px auto">
+        <svg id="clock" viewBox="-100 -100 200 200" width="100%" style="transform:rotate(-.25turn)">
+            
+        </svg>
+    </div>
+    <script src="./clock.js"></script>
+    <script>
+        function drawClock() {
+            let date = new Date();
+            let timeStr = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+            let svg = `
+            <circle cx="0" cy="0" r="100" fill="whitesmoke" />
+            <g>
+            <line x1="0" y1="0" ${getHourHandCoordinates(timeStr)} style="stroke:lightsteelblue;stroke-width:3" />
+            <line x1="0" y1="0" ${getMinuteHandCoordinates(timeStr)} style="stroke:lightsteelblue;stroke-width:2" />
+            <line x1="0" y1="0" ${getSecondHandCoordinates(timeStr)} style="stroke:silver;stroke-width:1" />
+            </g>
+            <circle cx="0" cy="0" r="3" fill="lightsteelblue" />
+            `;
+            document.getElementById('clock').innerHTML = svg;
+        }
+        drawClock();
+        setInterval(drawClock, 1000);
+    </script>
+</body>
+
+</html>
