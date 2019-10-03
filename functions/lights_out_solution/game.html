@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<div>>, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            background: #333;
+            text-align: center;
+        }
+        
+        #app {
+            margin-top: 100px;
+            display: inline-block;
+        }
+        
+        #app .row {
+            display: flex;
+        }
+        
+        #app .row .circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            margin: 5px;
+            cursor: pointer;
+            position: relative;
+            backface-visibility: hidden;
+        }
+        
+        #app .row .circle .fore,
+        #app .row .circle .back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            border-radius: 50%;
+            transition: all .5s;
+        }
+        
+        #app .row .circle .back {
+            background: #555;
+            backface-visibility: hidden;
+        }
+        
+        #app .row .circle .fore {
+            background: lightgreen;
+        }
+        
+        #app .row .circle:hover .back,
+        #app .row .circle:hover .fore {
+            transform: rotateY(30deg);
+        }
+        
+        #app .row .circle.active:hover .back,
+        #app .row .circle.active:hover .fore {
+            transform: rotateY(150deg);
+        }
+        
+        #app .row .circle.active .back,
+        #app .row .circle.active .fore {
+            transform: rotateY(180deg);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" crossorigin="anonymous"></script>
+    <script src="./ui.js"></script>
+    <script src="./game.js"></script>
+</body>
+
+</html>
