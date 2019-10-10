@@ -39,7 +39,7 @@ function processRequest(req, res) {
             }
             break;
         default:
-            fileBrowserService.getFile('./public/files' + req.url, (err, data) => {
+            fileBrowserService.getFile(req.url, (err, data) => {
                 if (err) {
                     console.error(err);
                     res.writeHead(404);
@@ -84,4 +84,4 @@ function getPage(path, res) {
 
 http.createServer(function(req, res) {
     processRequest(req, res);
-}).listen(8080);
+}).listen(8081);

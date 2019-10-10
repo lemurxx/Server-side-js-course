@@ -2,15 +2,15 @@
 //which returns directory information in a non-blocking way
 
 //the method accepts 2 arguments:
-//path - path of the directory
-//callback - a node-style error-first callback 
+//path - path of the directory 
+//callback - a node-style error-first - relative to ./public/files: '/images' means './public/files/images'   
 //https://nodejs.org/api/errors.html#errors_error_first_callbacks
 
 //if there is no error the method passes an object with 2 properties to the callback:
-//          path - path of the directory (equals to the path argument)
+//          path - path of the directory (equals to the path argument) 
 //          files - array of data of the files in the directory 
 //{
-//    path :"/images",
+//    path :"/images",  
 //    files":[{
 //          name: "gif",
 //          isFile: false,
