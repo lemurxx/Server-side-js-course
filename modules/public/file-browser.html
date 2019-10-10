@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+        
+        .sidebar {
+            width: 300px;
+            padding: 20px;
+            float: left;
+            min-height: calc(100vh - 40px);
+            background: whitesmoke;
+        }
+        
+        ul#files {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        ul#files li {
+            padding: 3px 10px;
+            cursor: pointer;
+        }
+        
+        ul#files li:hover,
+        ul#files li.selected {
+            color: steelblue;
+        }
+        
+        #content {
+            width: calc(100% - 445px);
+            padding: 50px;
+            float: left;
+        }
+        
+        #content img {
+            display: block;
+            width: 600px;
+            max-width: 100%;
+            max-height: 80vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="parent">
+        <div class="sidebar">
+            <ul id="files">
+
+            </ul>
+        </div>
+        <div id="content"></div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" crossorigin="anonymous"></script>
+    <script>
+        $(document).on('click', '[data-dir=true]', ev => {
+            let target = $(ev.target).closest('[data-file]');
+            let path = target.attr('data-file');
+            $.get(`/api/directory?dir=${path}`).then(data => appendList(path, data));
+        })
+
+        $(document).on('click', '[data-dir=false]', ev => {
+            let target = $(ev.target).closest('[data-file]');
+            let path = target.attr('data-file');
+            $.get(`${path}`).then((data, status, request) => {
+                const contentType = request.getResponseHeader('Content-type');
+                if (contentType.indexOf('image') > -1)
+                    $('#content').html('').append(`<img style="width:100%" src="${path}">`);
+                if (contentType.indexOf('text') > -1)
+                    $('#content').html('').append(data);
+            });
+        })
+
+        $(document).on('click', '.up-link', ev => {
+            let target = $(ev.target).closest('[data-path]');
+            let path = target.attr('data-path');
+            $.get(`/api/directory/parent?dir=${path}`).then(data => appendList(data.path, data));
+        })
+
+        $(document).on('click', '#files li', ev => {
+            $('#files li.selected').removeClass('selected');
+            $(ev.target).closest('li').addClass('selected');
+        });
+
+        function appendList(path, dirData) {
+            const list = $('#files');
+            const content = $('#content');
+            list.html('');
+            content.html('');
+            if (path.length > 1)
+                list.append(`<li data-path="${path}" class="up-link" > .. </li>`)
+            dirData.files.forEach(data => {
+                list.append(`<li data-dir="${data.isDirectory}" data-file="${dirData.path == '/' ? '' : dirData.path}/${data.name}">${data.name}</li>`);
+            })
+        }
+        $.get('/api/directory').then(dirData => {
+            appendList('', dirData);
+        })
+    </script>
+</body>
+
+</html>
