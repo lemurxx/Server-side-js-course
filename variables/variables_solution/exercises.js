@@ -79,7 +79,7 @@ function getParam(url, paramName) {
     if (valueEnd === -1) //last parameter
         return url.substr(valueStart);
     else
-        return url.substring(valueStart, valueEnd - 1);
+        return url.substring(valueStart, valueEnd);
 }
 
 console.log(getParam("http://example.com/path/to/page?firstname=john&lastname=doe&email=jdoe@example.com", "email"));
@@ -180,7 +180,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects
 */
 
 function generateInRange(min, max) {
-    return min + Math.floor(Math.random() * Math.floor(max));
+    return min + Math.floor(Math.random() * (max - min));
 }
 
 console.log(generateInRange(10, 20));
