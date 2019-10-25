@@ -75,7 +75,7 @@ function sort(prop, asc = true) {
 }
 
 
-//write an all function, that return a copy of the people array, 
+//write an all function, that returns a copy of the people array, 
 //the function has a fields parameter, which is an array containing a list of property names
 //if the fields is set the elements of the array returned by the function have only the properties specified in the fields array
 //if the property value is a string containing a number (ie. mass) convert it to number
