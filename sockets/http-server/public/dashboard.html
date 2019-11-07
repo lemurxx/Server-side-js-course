@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: verdana, sans-serif;
+            padding: 20px 50px;
+            font-size: 14px;
+        }
+        
+        #data-list {
+            display: flex;
+        }
+        
+        .os-data {
+            width: 400px;
+            background: whitesmoke;
+            padding: 30px;
+            padding-top: 0;
+            margin: 20px;
+        }
+        
+        h3 {
+            margin-top: 50px;
+            color: steelblue;
+        }
+        
+        .pie-chart {
+            width: 100px;
+            height: 100px;
+            position: relative;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        
+        .pie-chart div {
+            position: absolute;
+            height: 100%;
+        }
+        
+        .pie-chart .background {
+            background: silver;
+            width: 100%;
+        }
+        
+        .pie-chart .foreground {
+            background: steelblue;
+            width: 50%;
+            left: 50%;
+        }
+        
+        .pie-chart .hand {
+            width: 50%;
+            left: 50%;
+            transform-origin: left;
+        }
+        
+        label {
+            font-weight: bold;
+            width: 120px;
+            display: inline-block;
+        }
+        
+        .data-row {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="data-list"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" crossorigin="anonymous"></script>
+    <script src="dashboard.js"></script>
+    <script>
+    </script>
+</body>
+
+</html>
