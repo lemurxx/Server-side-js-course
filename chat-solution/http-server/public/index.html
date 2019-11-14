@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" crossorigin="anonymous"></script>
+    <script src="/client.js"></script>
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            padding: 50px;
+        }
+        
+        label {
+            display: block;
+            font-weight: bold;
+            color: cadetblue;
+            margin-bottom: 10px;
+        }
+        
+        textarea {
+            width: 500px;
+            height: 200px;
+        }
+        
+        input {
+            width: 500px;
+        }
+        
+        button {
+            border: none;
+            background: cadetblue;
+            color: white;
+            padding: 10px 20px;
+            margin-top: 10px;
+            border-radius: 2px;
+        }
+        
+        ul#messages {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        ul#messages li {
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+        
+        ul#messages li span.sender {
+            font-weight: bold;
+            color: cadetblue;
+        }
+        
+        .list-container {
+            width: 460px;
+            border: solid 1px silver;
+            height: 350px;
+            padding: 20px;
+            overflow: auto;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="un-joined">
+        <div>
+            <label>Nickname</label>
+            <input id="name">
+        </div>
+        <button id="join">Join</button>
+    </div>
+    <div id="joined" style="display: none;">
+        <div class="list-container">
+            <ul id="messages">
+
+            </ul>
+        </div>
+        <div>
+            <label>Message</label>
+            <textarea id="message"></textarea>
+        </div>
+        <button id="send">Send</button>
+    </div>
+    <script>
+        $('#join').click(ev => {
+            let name = $('#name').val();
+            if (!name) {
+                alert('First enter your nickname!');
+                return;
+            }
+            join(name);
+        })
+        $('#send').click(ev => {
+            let message = $('#message').val();
+            if (message) {
+                send(message);
+            }
+        })
+    </script>
+</body>
+
+</html>
