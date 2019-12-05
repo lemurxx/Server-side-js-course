@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="/js/jquery.min.js"></script>
+    <title>People</title>
+
+</head>
+
+<body>
+    <h1>People</h1>
+    <ul class="data-list">
+        <%for(let i = 0; i < people.length; i++) { %>
+            <li data-id="<%=people[i].id%>">
+                <b><%=people[i].name%></b>
+                <span><%=people[i].birth_year%></span>
+                <a onclick="movePerson('<%=people[i].id%>')">
+                    <i class="material-icons">swap_horizontal_circle</i>
+                </a>
+                <a onclick="deletePerson('<%=people[i].id%>')">
+                    <i class="material-icons" style="color:red">close</i>
+                </a>
+                <a href="/people/<%=people[i].id%>">
+                    <i class="material-icons">arrow_forward</i>
+                </a>
+            </li>
+            <%}%>
+    </ul>
+    <script>
+        function deletePerson(id) {
+            $.ajax({
+                    url: `/people/${id}`,
+                    method: 'delete'
+                })
+                .then(resp => {
+                    if (resp == 1) {
+                        $(`li[data-id=${id}]`).remove();
+                    }
+                })
+                .catch(err => console.error(err));
+        }
+
+        function movePerson(id) {
+            $.ajax({
+                    url: `/people/${id}`,
+                    method: 'put'
+                })
+                .then(resp => {
+                    if (resp == 1) {
+                        console.log('success');
+                    }
+                })
+                .catch(err => console.error(err));
+        }
+    </script>
+
+</body>
+
+</html>

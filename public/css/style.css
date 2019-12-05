@@ -19,11 +19,14 @@ ul.data-list li {
 }
 
 ul.data-list li b,
-ul.data-list li i {
+ul.data-list li i,
+.plus-icon {
     color: slateblue;
+    margin-left: 5px;
 }
 
-ul.data-list li i {
+ul.data-list li i,
+.plus-icon {
     float: right;
     background: #ddd;
     padding: 5px;
@@ -32,6 +35,11 @@ ul.data-list li i {
     opacity: 0;
     transition: opacity .5s;
     cursor: pointer;
+}
+
+.plus-icon {
+    float: none;
+    opacity: 1;
 }
 
 ul.data-list li:hover i {

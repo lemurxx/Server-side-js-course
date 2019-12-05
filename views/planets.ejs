@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+    <script src="/js/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <title>Planets</title>
+
+</head>
+
+<body>
+    <h1>Planets</h1>
+    <ul class="data-list">
+        <%for(let i = 0; i < planets.length; i++) { %>
+            <li>
+                <b><%=planets[i].name%></b>
+                <a href="/planet/<%=planets[i].id%>">
+                    <i class="material-icons">arrow_forward</i>
+                </a>
+            </li>
+            <%}%>
+    </ul>
+    <i class="material-icons plus-icon" onclick="addPlanet()">plus_one</i>
+    <script>
+        function addPlanet() {
+            const planet = {
+                name: "Jakku",
+                climate: "unknown",
+                diameter: 10000
+            };
+            $.post({
+                url: '/planet',
+                data: planet
+            })
+        }
+    </script>
+
+</body>
+
+</html>
