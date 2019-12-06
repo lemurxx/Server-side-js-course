@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Knex cheatsheet</title>
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js?skin=desert"></script>
+    <style>
+        .content {
+            display: flex;
+            background: #272728;
+            flex-flow: row wrap;
+            width: 100%;
+        }
+        
+        .box {
+            background: #333;
+            padding-bottom: 20px;
+            margin: 10px;
+            width: s600px;
+        }
+        
+        h3 {
+            font-family: verdana;
+            color: #272728;
+            background: skyblue;
+            padding: 20px;
+            margin: 0;
+        }
+        
+        .prettyprint {
+            padding: 0 20px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        <div class="box">
+            <h3>SELECT</h3>
+            <pre class="prettyprint"><code>
+knex.select('*')
+    .from('book');
+
+knex.select(['author_id', 'title', 'rating'])
+    .from('book');
+
+knex.table('book')
+    .columns('id', 'rating');
+
+knex('book')
+    .columns('id', 'rating');
+</code></pre>
+        </div>
+
+        <div class="box">
+            <h3>LIMIT, FIRST</h3>
+            <pre class="prettyprint"><code>
+knex('book')
+    .first();
+
+knex('book')
+    .limit(2);
+
+knex('book')
+    .limit(2)
+    .offset(2);
+    </code></pre>
+        </div>
+
+        <div class="box">
+            <h3>DISTINCT</h3>
+            <pre class="prettyprint"><code>
+knex('book')
+    .columns('rating')
+    .distinct();
+        </code></pre>
+        </div>
+
+        <div class="box">
+            <h3>AGGREGATION (COUNT, MIN, MAX, SUM, AVG)</h3>
+            <pre class="prettyprint"><code>
+knex('book')
+    .avg('rating as avg_rating');
+
+knex('book').select('author_id')
+    .avg('rating as avg_rating')
+    .groupBy('author_id'));
+                </code></pre>
+        </div>
+
+        <div class="box">
+            <h3>ORDERBY</h3>
+            <pre class="prettyprint"><code>
+    knex('book')
+        .orderBy('rating', 'desc')
+        .orderBy('title');
+    
+    knex('book')
+        .orderByRaw('rating desc, title asc');
+    
+                            </code></pre>
+        </div>
+
+
+
+        <div class="box">
+            <h3>WHERE</h3>
+            <pre class="prettyprint"><code>
+knex('book').select('author_id', 'title', 'rating')
+    .where({ author_id: 1, rating: 9 });
+                    
+knex('book').select('author_id', 'title', 'rating')
+    .where("rating", ">=", 8);
+                    
+knex('book').select('author_id', 'title', 'rating')
+    .where("rating", "in", [8, 9]);
+                    
+const subquery = knex('author').select('id')
+    .where('lastname', 'in', ['Rowling', 'Martin']);                
+knex('book').select('author_id', 'title', 'rating')
+    .where("author_id", "in", subquery);
+                </code></pre>
+        </div>
+
+
+
+
+
+        <div class="box">
+            <h3>ORWHERE, ANDWHERE</h3>
+            <pre class="prettyprint"><code>
+knex('book').select('author_id', 'title', 'rating')
+    .where("author_id", 1)
+    .orWhere("rating", 10);
+                
+knex('book').select('author_id', 'title', 'rating')
+    .where("author_id", 1)
+    .andWhere("rating", 10);
+                </code></pre>
+        </div>
+
+
+
+        <div class="box">
+            <h3>JOIN</h3>
+            <pre class="prettyprint"><code>
+knex('book')
+    .column('firstname', 'lastname', 'title', 'rating', 'author.id as author_id')
+    .join('author', 'author.id', '=', 'book.author_id'));
+                    
+knex('book')
+    .column('firstname', 'lastname', 'title', 'rating')
+    .join('author', function() {
+        this
+            .on("author.id", "=", "book.author_id")
+            .andOn("rating", "=", 10)
+    }))
+                        
+                    </code></pre>
+        </div>
+
+
+
+
+
+
+        <div class="box">
+            <h3 style="background:#ffa0a0;">DELETE</h3>
+            <pre class="prettyprint"><code>
+knex.table('book')
+    .where({ id: 6 })
+    .del()
+                            </code></pre>
+        </div>
+
+        <div class="box">
+            <h3 style="background:khaki;">UPDATE</h3>
+            <pre class="prettyprint"><code>
+knex.table('book')
+    .where({ id: 1 })
+    .update({ rating: 10 })
+                                </code></pre>
+        </div>
+
+
+        <div class="box">
+            <h3 style="background:khaki;">INSERT</h3>
+            <pre class="prettyprint"><code>
+const bookObj = {
+    title: 'The Tempest',
+    author_id:	1,
+    rating:	10
+};
+knex.insert(bookObj)
+    .into('book');
+
+                            </code></pre>
+        </div>
+
+
+        <div class="box">
+            <h3>RAW QUERY</h3>
+            <pre class="prettyprint"><code>
+knex.raw('select * from book')
+                                </code></pre>
+        </div>
+
+
+        <div class="box">
+            <h3>PARAMS</h3>
+            <pre class="prettyprint"><code>
+    //do not concatenate to query, 
+    //use params to avoid SQL injections
+        
+    let author_id = 2; 
+        
+    knex.raw('SELECT * FROM book WHERE author_id = ?', 
+        [author_id]);
+                            </code></pre>
+        </div>
+
+        <div class="box">
+            <h3 style="background:lightgreen;">TRANSACTION</h3>
+            <pre class="prettyprint"><code>
+knex.transaction(trx =>
+    //returns a promise
+    trx.table('book')
+        .where({ author_id: 2 })
+        .del()
+        .then(() =>
+            trx.table('author')
+                .where({ id: 2 })
+                .del())
+    );
+                                </code></pre>
+        </div>
+
+</body>
+
+</html>
